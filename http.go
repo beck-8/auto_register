@@ -140,6 +140,7 @@ func renewHandler(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusSeeOther, "/query")
+	restart <- 1
 }
 
 func updatePasswordFile() {
