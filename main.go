@@ -11,7 +11,7 @@ func main() {
 
 	r.LoadHTMLGlob("templates/*")
 
-	r.GET("/register", showRegisterPage)
+	r.GET("/", showRegisterPage)
 	r.POST("/register", registerHandler)
 
 	r.GET("/query", showQueryPage)
