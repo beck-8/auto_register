@@ -22,6 +22,7 @@ func registerHandler(c *gin.Context) {
 	if username == "" || password == "" {
 		c.String(http.StatusBadRequest, "The username and password cannot be empty.")
 	}
+
 	var codeType int
 	var usedBy string
 	err := db.QueryRow("SELECT type, used_by FROM authcodes WHERE code = ?", authCode).Scan(&codeType, &usedBy)
@@ -57,6 +58,7 @@ func registerHandler(c *gin.Context) {
 	}
 
 	c.Redirect(http.StatusSeeOther, "/query")
+	restart <- 1
 }
 
 func showQueryPage(c *gin.Context) {
@@ -117,6 +119,9 @@ func renewHandler(c *gin.Context) {
 	}
 
 	currentExpiry, _ := time.Parse(time.RFC3339, currentExpiryDate)
+	if time.Now().After(currentExpiry) {
+		currentExpiry = time.Now()
+	}
 	newExpiryDate := currentExpiry.Add(duration)
 
 	_, err = db.Exec("UPDATE users SET expiry_date = ?, update_date = ? ,code = ? WHERE username = ?",
