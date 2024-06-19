@@ -38,8 +38,8 @@ func registerHandler(c *gin.Context) {
 	now := time.Now()
 	expiryDate := now.Add(duration)
 
-	_, err = db.Exec("INSERT INTO users (username, password, register_date, expiry_date, update_date, auth_code) VALUES (?, ?, ?, ?, ?, ?)",
-		username, password, now.Format(time.RFC3339), expiryDate.Format(time.RFC3339), now.Format(time.RFC3339), authCode)
+	_, err = db.Exec("INSERT INTO users (username, password, register_date, expiry_date, update_date, auth_code, register_ip) VALUES (?, ?, ?, ?, ?, ?)",
+		username, password, now.Format(time.RFC3339), expiryDate.Format(time.RFC3339), now.Format(time.RFC3339), authCode, c.ClientIP())
 	if err != nil {
 		log.Println(err)
 		c.String(http.StatusBadRequest, "User already exists")

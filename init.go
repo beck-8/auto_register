@@ -26,7 +26,8 @@ func init() {
 		register_date TEXT,
 		expiry_date TEXT,
 		update_date TEXT,
-		auth_code TEXT
+		auth_code TEXT,
+		register_ip TEXT
 	);`
 
 	_, err = db.Exec(createUserTable)
