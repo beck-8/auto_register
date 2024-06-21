@@ -21,6 +21,7 @@ func registerHandler(c *gin.Context) {
 
 	if username == "" || password == "" {
 		c.String(http.StatusBadRequest, "The username and password cannot be empty.")
+		return
 	}
 
 	var codeType int
@@ -124,7 +125,7 @@ func renewHandler(c *gin.Context) {
 	}
 	newExpiryDate := currentExpiry.Add(duration)
 
-	_, err = db.Exec("UPDATE users SET expiry_date = ?, update_date = ? ,code = ? WHERE username = ?",
+	_, err = db.Exec("UPDATE users SET expiry_date = ?, update_date = ? , auth_code = ? WHERE username = ?",
 		newExpiryDate.Format(time.RFC3339), time.Now().Format(time.RFC3339), authCode, username)
 	if err != nil {
 		log.Println(err)
