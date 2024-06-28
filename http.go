@@ -23,6 +23,10 @@ func registerHandler(c *gin.Context) {
 		c.String(http.StatusBadRequest, "The username and password cannot be empty.")
 		return
 	}
+	if authCode == "" {
+		c.String(http.StatusBadRequest, "authCode cannot be empty.")
+		return
+	}
 
 	var codeType int
 	var usedBy string
