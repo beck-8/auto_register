@@ -62,7 +62,10 @@ func registerHandler(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusSeeOther, "/query")
+	c.HTML(http.StatusOK, "result.html", gin.H{
+		"Username":   username,
+		"ExpiryDate": expiryDate,
+	})
 	restart <- 1
 }
 
@@ -144,7 +147,10 @@ func renewHandler(c *gin.Context) {
 		return
 	}
 
-	c.Redirect(http.StatusSeeOther, "/query")
+	c.HTML(http.StatusOK, "result.html", gin.H{
+		"Username":   username,
+		"ExpiryDate": newExpiryDate,
+	})
 	restart <- 1
 }
 
