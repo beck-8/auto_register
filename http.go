@@ -64,7 +64,7 @@ func registerHandler(c *gin.Context) {
 
 	c.HTML(http.StatusOK, "result.html", gin.H{
 		"Username":   username,
-		"ExpiryDate": newExpiryDate.Format(time.RFC3339),
+		"ExpiryDate": expiryDate.Format(time.RFC3339),
 	})
 	restart <- 1
 }
