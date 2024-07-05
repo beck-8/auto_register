@@ -33,7 +33,7 @@ func registerHandler(c *gin.Context) {
 	err := db.QueryRow("SELECT type, used_by FROM authcodes WHERE code = ?", authCode).Scan(&codeType, &usedBy)
 	if err != nil {
 		log.Println(err)
-		c.String(http.StatusBadRequest, "Invalid or used auth code")
+		c.String(http.StatusBadRequest, "Invalid auth code")
 		return
 	}
 
